@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import id.ac.polinema.aplikasikas.adapter.TransactionAdapter;
 import id.ac.polinema.aplikasikas.model.Account;
+import id.ac.polinema.aplikasikas.model.Session;
 import id.ac.polinema.aplikasikas.model.Transaction;
 
 public class MainActivity extends AppCompatActivity implements TransactionAdapter.OnItemTransactionListener {
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements TransactionAdapte
     private RecyclerView transactionView;
     private TransactionAdapter adapter;
     private Account account;
+    private Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,15 +108,6 @@ public class MainActivity extends AppCompatActivity implements TransactionAdapte
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onTransactionClicked(int index, Transaction item) {
         Intent intent = new Intent(this, SaveActivity.class);
         intent.putExtra(TRANSACTION_KEY, item);
@@ -125,5 +118,28 @@ public class MainActivity extends AppCompatActivity implements TransactionAdapte
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_logout) {
+            session.logout();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void proses_logout(MenuItem item) {
+        session.logout();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }
