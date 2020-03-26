@@ -128,7 +128,9 @@ public class MainActivity extends AppCompatActivity implements TransactionAdapte
             startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
+            //have error at this statement
             session.logout();
+            //have error at this statement
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
